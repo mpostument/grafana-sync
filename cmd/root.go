@@ -28,30 +28,18 @@ import (
 
 var cfgFile string
 
-// rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "grafana-sync",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
-	//	Run: func(cmd *cobra.Command, args []string) { },
+	Short: "Root command for grafana interaction",
+	Long:  `Root command for grafana interaction.`,
 }
 
 var pullCmd = &cobra.Command{
 	Use:   "pull",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Pull grafana dashboards in to directory",
+	Long: `Save to the directory grafana dashboards.
+Directory name specified by flag --directory. If flag --tags is used,
+additional directory will be created with tag name creating structure like directory/tag`,
 	Run: func(cmd *cobra.Command, args []string) {
 		url, _ := cmd.Flags().GetString("url")
 		apiKey, _ := cmd.Flags().GetString("apikey")
@@ -63,13 +51,8 @@ to quickly create a Cobra application.`,
 
 var pushCmd = &cobra.Command{
 	Use:   "push",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Push grafana dashboards from directory",
+	Long:  `Read json with dashboards description and publish to grafana.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		url, _ := cmd.Flags().GetString("url")
 		apiKey, _ := cmd.Flags().GetString("apikey")
