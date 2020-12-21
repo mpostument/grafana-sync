@@ -27,13 +27,13 @@ Download the latest binary from [releases](https://github.com/mpostument/grafana
 
 #### Save all dashboards to directory
 
-Save all dashboards to directory - `grafana-sync pull`  
+`grafana-sync pull`  
 Example:
  `grafana-sync pull --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="dashboard" --url http://127.0.0.1:3000`
 
 #### Save dashboards with specific tags to directory
 
-Save dashboards with specific tags to directory - `grafana-sync pull`  
+`grafana-sync pull`  
 Example:
  `grafana-sync pull --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="dashboard" --url http://127.0.0.1:3000 --tag=export`  
 
@@ -41,7 +41,7 @@ Example:
 
 #### Push dashboards to grafana
 
-Push dashboards to grafana - `grafana-sync push`  
+`grafana-sync push`  
 Example:
  `grafana-sync push --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="dashboard" --url http://127.0.0.1:3000`
 
