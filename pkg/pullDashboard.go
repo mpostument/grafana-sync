@@ -46,11 +46,13 @@ func writeDashboardToFile(directory string, dashboard sdk.Board, name string, ta
 	if tag != "" {
 		path = fmt.Sprintf("%s/%s", directory, tag)
 	} else {
-		path = fmt.Sprintf("%s", directory)
+		path = directory
 	}
 
 	if _, err = os.Stat(path); os.IsNotExist(err) {
-		os.MkdirAll(path, 0755)
+		if err = os.MkdirAll(path, 0755); err != nil {
+			log.Fatalln("Directory is not created", err)
+		}
 	}
 
 	fileName = fmt.Sprintf("%s/%s.json", path, name)
