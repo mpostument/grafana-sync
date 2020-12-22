@@ -1,4 +1,4 @@
-package pkg
+package grafana
 
 import (
 	"context"
@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 
 	"github.com/grafana-tools/sdk"
 )
@@ -43,10 +44,9 @@ func writeDashboardToFile(directory string, dashboard sdk.Board, name string, ta
 		fileName      string
 	)
 
+	path = directory
 	if tag != "" {
-		path = fmt.Sprintf("%s/%s", directory, tag)
-	} else {
-		path = directory
+		path = filepath.Join(path, tag)
 	}
 
 	if _, err = os.Stat(path); os.IsNotExist(err) {
@@ -54,7 +54,6 @@ func writeDashboardToFile(directory string, dashboard sdk.Board, name string, ta
 			log.Fatalln("Directory is not created", err)
 		}
 	}
-
 	fileName = fmt.Sprintf("%s/%s.json", path, name)
 	dashboardFile, err = os.Create(fileName)
 	if err != nil {

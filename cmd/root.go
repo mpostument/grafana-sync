@@ -17,9 +17,10 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 	"os"
 
-	"github.com/mpostument/grafana-sync/pkg"
+	"github.com/mpostument/grafana-sync/grafana"
 	"github.com/spf13/cobra"
 
 	homedir "github.com/mitchellh/go-homedir"
@@ -42,10 +43,10 @@ Directory name specified by flag --directory. If flag --tags is used,
 additional directory will be created with tag name creating structure like directory/tag`,
 	Run: func(cmd *cobra.Command, args []string) {
 		url, _ := cmd.Flags().GetString("url")
-		apiKey, _ := cmd.Flags().GetString("apikey")
+		apiKey := viper.GetString("apikey")
 		directory, _ := cmd.Flags().GetString("directory")
 		tag, _ := cmd.Flags().GetString("tag")
-		pkg.PullDashboard(url, apiKey, directory, tag)
+		grafana.PullDashboard(url, apiKey, directory, tag)
 	},
 }
 
@@ -57,7 +58,7 @@ var pushCmd = &cobra.Command{
 		url, _ := cmd.Flags().GetString("url")
 		apiKey, _ := cmd.Flags().GetString("apikey")
 		directory, _ := cmd.Flags().GetString("directory")
-		pkg.PushDashboard(url, apiKey, directory)
+		grafana.PushDashboard(url, apiKey, directory)
 	},
 }
 
@@ -76,6 +77,10 @@ func init() {
 	rootCmd.PersistentFlags().StringP("directory", "d", ".", "Directory where to save dashboards")
 	rootCmd.PersistentFlags().StringP("apikey", "a", "", "Grafana api key")
 	rootCmd.PersistentFlags().StringP("tag", "t", "", "Dashboard tag to read")
+
+	if err := viper.BindPFlag("apikey", rootCmd.PersistentFlags().Lookup("apikey")); err != nil {
+		log.Println(err)
+	}
 
 	rootCmd.AddCommand(pullCmd)
 	rootCmd.AddCommand(pushCmd)
