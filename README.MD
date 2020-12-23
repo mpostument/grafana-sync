@@ -49,7 +49,8 @@ Example:
 
 `directory` - Directory where to save dashboards. Default `.`  
 `tag` - Dashboard tag to read. Supported only with `pull` option. Default `""`  
-`apikey` - Grafana api key, need to be editor or admin. Default `""`. Api key can be stored in `$HOME/.grafana-sync.yaml` as `apikey: <ApiKey>`
+`apikey` - Grafana api key, need to be editor or admin. Default `""`.  
+Api key can be stored in `$HOME/.grafana-sync.yaml` as `apikey: <ApiKey>`  
 `url` - Grafana Url with port. Default `http://localhost:3000`  
 
 ## Contributing
