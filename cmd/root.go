@@ -35,9 +35,9 @@ var rootCmd = &cobra.Command{
 	Long:  `Root command for grafana interaction.`,
 }
 
-var pullCmd = &cobra.Command{
-	Use:   "pull",
-	Short: "Pull grafana dashboards in to directory",
+var pullDashboardsCmd = &cobra.Command{
+	Use:   "pull-dashboards",
+	Short: "Pull grafana dashboards in to the directory",
 	Long: `Save to the directory grafana dashboards.
 Directory name specified by flag --directory. If flag --tags is used,
 additional directory will be created with tag name creating structure like directory/tag`,
@@ -46,19 +46,81 @@ additional directory will be created with tag name creating structure like direc
 		apiKey := viper.GetString("apikey")
 		directory, _ := cmd.Flags().GetString("directory")
 		tag, _ := cmd.Flags().GetString("tag")
-		grafana.PullDashboard(url, apiKey, directory, tag)
+		if err := grafana.PullDashboard(url, apiKey, directory, tag); err != nil {
+			log.Fatalln("Pull dashboards command failed", err)
+		}
 	},
 }
 
-var pushCmd = &cobra.Command{
-	Use:   "push",
+var pushDashboardsCmd = &cobra.Command{
+	Use:   "push-dashboards",
 	Short: "Push grafana dashboards from directory",
 	Long:  `Read json with dashboards description and publish to grafana.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		url, _ := cmd.Flags().GetString("url")
 		apiKey, _ := cmd.Flags().GetString("apikey")
 		directory, _ := cmd.Flags().GetString("directory")
-		grafana.PushDashboard(url, apiKey, directory)
+		if err := grafana.PushDashboard(url, apiKey, directory); err != nil {
+			log.Fatalln("Push dashboards command failed", err)
+		}
+	},
+}
+
+var pullFoldersCmd = &cobra.Command{
+	Use:   "pull-folders",
+	Short: "Pull grafana folders json in to the directory",
+	Long: `Save to the directory grafana folders json.
+Directory name specified by flag --directory.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		url, _ := cmd.Flags().GetString("url")
+		apiKey := viper.GetString("apikey")
+		directory, _ := cmd.Flags().GetString("directory")
+		if err := grafana.PullFolders(url, apiKey, directory); err != nil {
+			log.Fatalln("Pull folders command failed", err)
+		}
+	},
+}
+
+var pushFoldersCmd = &cobra.Command{
+	Use:   "push-folders",
+	Short: "Read json and create grafana folders",
+	Long:  `Read json with folders description and publish to grafana.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		url, _ := cmd.Flags().GetString("url")
+		apiKey := viper.GetString("apikey")
+		directory, _ := cmd.Flags().GetString("directory")
+		if err := grafana.PushFolder(url, apiKey, directory); err != nil {
+			log.Fatalln("Push folders command failed", err)
+		}
+	},
+}
+
+var pullNotificationsCmd = &cobra.Command{
+	Use:   "pull-notifications",
+	Short: "Pull grafana notifications json in to the directory",
+	Long: `Save to the directory grafana folders json.
+Directory name specified by flag --directory.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		url, _ := cmd.Flags().GetString("url")
+		apiKey := viper.GetString("apikey")
+		directory, _ := cmd.Flags().GetString("directory")
+		if err := grafana.PullNotifications(url, apiKey, directory); err != nil {
+			log.Fatalln("Pull notifications command failed", err)
+		}
+	},
+}
+
+var pushNotificationsCmd = &cobra.Command{
+	Use:   "push-notifications",
+	Short: "Read json and create grafana notifications",
+	Long:  `Read json with notifications description and publish to grafana.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		url, _ := cmd.Flags().GetString("url")
+		apiKey := viper.GetString("apikey")
+		directory, _ := cmd.Flags().GetString("directory")
+		if err := grafana.PushNotification(url, apiKey, directory); err != nil {
+			log.Fatalln("Push notifications command failed", err)
+		}
 	},
 }
 
@@ -82,8 +144,12 @@ func init() {
 		log.Println(err)
 	}
 
-	rootCmd.AddCommand(pullCmd)
-	rootCmd.AddCommand(pushCmd)
+	rootCmd.AddCommand(pullDashboardsCmd)
+	rootCmd.AddCommand(pushDashboardsCmd)
+	rootCmd.AddCommand(pullFoldersCmd)
+	rootCmd.AddCommand(pushFoldersCmd)
+	rootCmd.AddCommand(pullNotificationsCmd)
+	rootCmd.AddCommand(pushNotificationsCmd)
 }
 
 // initConfig reads in config file and ENV variables if set.

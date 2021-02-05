@@ -11,8 +11,12 @@ Keep your grafana dashboards in sync.
     - [Pull](#pull)
       - [Save all dashboards to directory](#save-all-dashboards-to-directory)
       - [Save dashboards with specific tags to directory](#save-dashboards-with-specific-tags-to-directory)
+      - [Save folders configuration to directory](#save-folders-configuration-to-directory)
+      - [Save notifications configuration to directory](#save-notifications-configuration-to-directory)
     - [Push](#push)
       - [Push dashboards to grafana](#push-dashboards-to-grafana)
+      - [Push folders to grafana](#push-folders-to-grafana)
+      - [Push notifications to grafana](#push-notifications-to-grafana)
   - [Global parameters](#global-parameters)
   - [Contributing](#contributing)
   - [License](#license)
@@ -27,23 +31,47 @@ Download the latest binary from [releases](https://github.com/mpostument/grafana
 
 #### Save all dashboards to directory
 
-`grafana-sync pull`  
+`grafana-sync pull-dashboards`  
 Example:
- `grafana-sync pull --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="dashboard" --url http://127.0.0.1:3000`
+ `grafana-sync pull-dashboards --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="dashboards" --url http://127.0.0.1:3000`
 
 #### Save dashboards with specific tags to directory
 
-`grafana-sync pull`  
+`grafana-sync pull-dashboards`  
 Example:
- `grafana-sync pull --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="dashboard" --url http://127.0.0.1:3000 --tag=export`  
+ `grafana-sync pull-dashboards --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="dashboards" --url http://127.0.0.1:3000 --tag=export`  
+
+#### Save folders configuration to directory
+
+`grafana-sync pull-folders`  
+Example:
+ `grafana-sync pull-folders --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="folders" --url http://127.0.0.1:3000`  
+
+#### Save notifications configuration to directory
+
+`grafana-sync pull-notifications`  
+Example:
+ `grafana-sync pull-notifications --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="notifications" --url http://127.0.0.1:3000`  
 
 ### Push
 
 #### Push dashboards to grafana
 
-`grafana-sync push`  
+`grafana-sync push-dashboards`  
 Example:
- `grafana-sync push --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="dashboard" --url http://127.0.0.1:3000`
+ `grafana-sync push-dashboards --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="dashboards" --url http://127.0.0.1:3000`
+
+#### Push folders to grafana
+
+`grafana-sync push-folders`  
+Example:
+ `grafana-sync push-folders --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="folders" --url http://127.0.0.1:3000`
+
+#### Push notifications to grafana
+
+`grafana-sync push-notifications`  
+Example:
+ `grafana-sync push-notifications --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="notifications" --url http://127.0.0.1:3000`
 
 ## Global parameters
 
