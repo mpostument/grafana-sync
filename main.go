@@ -15,7 +15,9 @@ limitations under the License.
 */
 package main
 
-import "github.com/mpostument/grafana-sync/cmd"
+import (
+	"github.com/mpostument/grafana-sync/cmd"
+)
 
 func main() {
 	cmd.Execute()
