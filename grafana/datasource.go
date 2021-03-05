@@ -1,0 +1,70 @@
+package grafana
+
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"log"
+	"os"
+	"strings"
+
+	"github.com/grafana-tools/sdk"
+)
+
+func PullDatasources(grafanaURL string, apiKey string, directory string) error {
+	var (
+		datasources []sdk.Datasource
+		err         error
+	)
+	ctx := context.Background()
+
+	c := sdk.NewClient(grafanaURL, apiKey, sdk.DefaultHTTPClient)
+
+	if datasources, err = c.GetAllDatasources(ctx); err != nil {
+		return err
+	}
+
+	for _, datasource := range datasources {
+		b, err := json.Marshal(datasource)
+		if err != nil {
+			return err
+		}
+		if err = writeToFile(directory, b, datasource.Name, ""); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func PushDatasources(grafanaURL string, apiKey string, directory string) error {
+	var (
+		filesInDir []os.FileInfo
+		rawFolder  []byte
+		err        error
+	)
+
+	ctx := context.Background()
+	c := sdk.NewClient(grafanaURL, apiKey, sdk.DefaultHTTPClient)
+	if filesInDir, err = ioutil.ReadDir(directory); err != nil {
+		return err
+	}
+	for _, file := range filesInDir {
+		if strings.HasSuffix(file.Name(), ".json") {
+			if rawFolder, err = ioutil.ReadFile(fmt.Sprintf("%s/%s", directory, file.Name())); err != nil {
+				log.Println(err)
+				continue
+			}
+			var datasource sdk.Datasource
+			if err = json.Unmarshal(rawFolder, &datasource); err != nil {
+				log.Println(err)
+				continue
+			}
+			if _, err := c.CreateDatasource(ctx, datasource); err != nil {
+				log.Printf("error on importing folder %s", datasource.Name)
+				continue
+			}
+		}
+	}
+	return nil
+}

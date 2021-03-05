@@ -124,6 +124,35 @@ var pushNotificationsCmd = &cobra.Command{
 	},
 }
 
+var pullDataSourcesCmd = &cobra.Command{
+	Use:   "pull-datasources",
+	Short: "Pull grafana datasources json in to the directory",
+	Long: `Save to the directory grafana datasources json.
+Directory name specified by flag --directory.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		url, _ := cmd.Flags().GetString("url")
+		apiKey := viper.GetString("apikey")
+		directory, _ := cmd.Flags().GetString("directory")
+		if err := grafana.PullDatasources(url, apiKey, directory); err != nil {
+			log.Fatalln("Pull datasources command failed", err)
+		}
+	},
+}
+
+var pushDataSourcesCmd = &cobra.Command{
+	Use:   "push-datasources",
+	Short: "Read json and create grafana datasources",
+	Long:  `Read json with datasources description and publish to grafana.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		url, _ := cmd.Flags().GetString("url")
+		apiKey := viper.GetString("apikey")
+		directory, _ := cmd.Flags().GetString("directory")
+		if err := grafana.PushDatasources(url, apiKey, directory); err != nil {
+			log.Fatalln("Push datasources command failed", err)
+		}
+	},
+}
+
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
@@ -150,6 +179,8 @@ func init() {
 	rootCmd.AddCommand(pushFoldersCmd)
 	rootCmd.AddCommand(pullNotificationsCmd)
 	rootCmd.AddCommand(pushNotificationsCmd)
+	rootCmd.AddCommand(pullDataSourcesCmd)
+	rootCmd.AddCommand(pushDataSourcesCmd)
 }
 
 // initConfig reads in config file and ENV variables if set.
