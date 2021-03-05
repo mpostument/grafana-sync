@@ -13,10 +13,12 @@ Keep your grafana dashboards in sync.
       - [Save dashboards with specific tags to directory](#save-dashboards-with-specific-tags-to-directory)
       - [Save folders configuration to directory](#save-folders-configuration-to-directory)
       - [Save notifications configuration to directory](#save-notifications-configuration-to-directory)
+      - [Save datasources configuration to directory](#save-datasources-configuration-to-directory)
     - [Push](#push)
       - [Push dashboards to grafana](#push-dashboards-to-grafana)
       - [Push folders to grafana](#push-folders-to-grafana)
       - [Push notifications to grafana](#push-notifications-to-grafana)
+      - [Push datasources to grafana](#push-datasources-to-grafana)
   - [Global parameters](#global-parameters)
   - [Contributing](#contributing)
   - [License](#license)
@@ -53,6 +55,12 @@ Example:
 Example:
  `grafana-sync pull-notifications --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="notifications" --url http://127.0.0.1:3000`  
 
+#### Save datasources configuration to directory
+
+`grafana-sync pull-datasources`  
+Example:
+ `grafana-sync pull-datasources --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="datasources" --url http://127.0.0.1:3000`  
+
 ### Push
 
 #### Push dashboards to grafana
@@ -72,6 +80,12 @@ Example:
 `grafana-sync push-notifications`  
 Example:
  `grafana-sync push-notifications --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="notifications" --url http://127.0.0.1:3000`
+
+#### Push datasources to grafana
+
+`grafana-sync push-datasources`  
+Example:
+ `grafana-sync push-datasources --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="datasources" --url http://127.0.0.1:3000`
 
 ## Global parameters
 
