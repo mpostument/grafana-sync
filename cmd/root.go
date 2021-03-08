@@ -60,7 +60,8 @@ var pushDashboardsCmd = &cobra.Command{
 		url, _ := cmd.Flags().GetString("url")
 		apiKey, _ := cmd.Flags().GetString("apikey")
 		directory, _ := cmd.Flags().GetString("directory")
-		if err := grafana.PushDashboard(url, apiKey, directory); err != nil {
+		folderId, _ := cmd.Flags().GetInt("folderId")
+		if err := grafana.PushDashboard(url, apiKey, directory, folderId); err != nil {
 			log.Fatalln("Push dashboards command failed", err)
 		}
 	},
@@ -167,7 +168,8 @@ func init() {
 	rootCmd.PersistentFlags().StringP("url", "u", "http://localhost:3000", "Grafana Url with port")
 	rootCmd.PersistentFlags().StringP("directory", "d", ".", "Directory where to save dashboards")
 	rootCmd.PersistentFlags().StringP("apikey", "a", "", "Grafana api key")
-	rootCmd.PersistentFlags().StringP("tag", "t", "", "Dashboard tag to read")
+	pullDataSourcesCmd.PersistentFlags().StringP("tag", "t", "", "Dashboard tag to read")
+	pushDashboardsCmd.PersistentFlags().IntP("folderId", "f", 0, "Directory Id to which push dashboards")
 
 	if err := viper.BindPFlag("apikey", rootCmd.PersistentFlags().Lookup("apikey")); err != nil {
 		log.Println(err)
