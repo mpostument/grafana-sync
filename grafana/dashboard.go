@@ -44,7 +44,7 @@ func PullDashboard(grafanaURL string, apiKey string, directory string, tag strin
 	return nil
 }
 
-func PushDashboard(grafanaURL string, apiKey string, directory string) error {
+func PushDashboard(grafanaURL string, apiKey string, directory string, folderId int) error {
 	var (
 		filesInDir []os.FileInfo
 		rawBoard   []byte
@@ -68,7 +68,7 @@ func PushDashboard(grafanaURL string, apiKey string, directory string) error {
 				continue
 			}
 			params := sdk.SetDashboardParams{
-				FolderID:  sdk.DefaultFolderId,
+				FolderID:  folderId,
 				Overwrite: true,
 			}
 			if _, err := c.SetDashboard(ctx, board, params); err != nil {

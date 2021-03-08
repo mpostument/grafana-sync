@@ -17,6 +17,7 @@ Keep your grafana dashboards in sync.
     - [Push](#push)
       - [Push dashboards to grafana](#push-dashboards-to-grafana)
       - [Push folders to grafana](#push-folders-to-grafana)
+      - [Push folders to grafana in custom folder](#push-folders-to-grafana-in-custom-folder)
       - [Push notifications to grafana](#push-notifications-to-grafana)
       - [Push datasources to grafana](#push-datasources-to-grafana)
   - [Global parameters](#global-parameters)
@@ -33,13 +34,13 @@ Download the latest binary from [releases](https://github.com/mpostument/grafana
 
 #### Save all dashboards to directory
 
-`grafana-sync pull-dashboards`  
+`grafana-sync pull-dashboards --directory="dashboards`  
 Example:
  `grafana-sync pull-dashboards --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="dashboards" --url http://127.0.0.1:3000`
 
 #### Save dashboards with specific tags to directory
 
-`grafana-sync pull-dashboards`  
+`grafana-sync pull-dashboards --tag=export`  
 Example:
  `grafana-sync pull-dashboards --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="dashboards" --url http://127.0.0.1:3000 --tag=export`  
 
@@ -74,6 +75,23 @@ Example:
 `grafana-sync push-folders`  
 Example:
  `grafana-sync push-folders --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="folders" --url http://127.0.0.1:3000`
+
+#### Push folders to grafana in custom folder
+
+Find grafana folder Id by opening /api/folders in browser.  
+Example:
+`http://127.0.0.1:3000/api/folders`
+
+Find required folderId in output
+
+```json
+[{"id":1,"uid":"RcuWg5UMz","title":"TestFolder"}]
+```
+
+Specify folder id in push command
+`grafana-sync push-folders --folderId=<FolderId>`  
+Example:
+ `grafana-sync push-folders --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="folders" --url http://127.0.0.1:3000 --folderId=1`
 
 #### Push notifications to grafana
 
