@@ -68,3 +68,20 @@ func PushFolder(grafanaURL string, apiKey string, directory string) error {
 	}
 	return nil
 }
+
+func FindFolderId(grafanaURL string, apiKey string, folderName string) (int, error) {
+	ctx := context.Background()
+	c := sdk.NewClient(grafanaURL, apiKey, sdk.DefaultHTTPClient)
+
+	allFolders, err := c.GetAllFolders(ctx)
+
+	if err != nil {
+		return 0, err
+	}
+	for _, folder := range allFolders {
+		if folder.Title == folderName {
+			return folder.ID, nil
+		}
+	}
+	return 0, nil
+}
