@@ -12,18 +12,28 @@ import (
 	"github.com/grafana-tools/sdk"
 )
 
-func PullDashboard(grafanaURL string, apiKey string, directory string, tag string) error {
+func PullDashboard(grafanaURL string, apiKey string, directory string, tag string, folderID int) error {
 	var (
 		boardLinks []sdk.FoundBoard
 		rawBoard   sdk.Board
 		meta       sdk.BoardProperties
 		err        error
 	)
+
 	ctx := context.Background()
 
 	c := sdk.NewClient(grafanaURL, apiKey, sdk.DefaultHTTPClient)
 
-	if boardLinks, err = c.Search(ctx, sdk.SearchTag(tag), sdk.SearchType(sdk.SearchTypeDashboard)); err != nil {
+	searchParams := []sdk.SearchParam{sdk.SearchType(sdk.SearchTypeDashboard)}
+	if folderID != -1 {
+		searchParams = append(searchParams, sdk.SearchFolderID(folderID))
+	}
+
+	if tag != "" {
+		searchParams = append(searchParams, sdk.SearchTag(tag))
+	}
+
+	if boardLinks, err = c.Search(ctx, searchParams...); err != nil {
 		return err
 	}
 

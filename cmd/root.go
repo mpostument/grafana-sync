@@ -43,11 +43,26 @@ var pullDashboardsCmd = &cobra.Command{
 Directory name specified by flag --directory. If flag --tags is used,
 additional directory will be created with tag name creating structure like directory/tag`,
 	Run: func(cmd *cobra.Command, args []string) {
+		var (
+			folderId int
+			err      error
+		)
 		url, _ := cmd.Flags().GetString("url")
 		apiKey := viper.GetString("apikey")
 		directory, _ := cmd.Flags().GetString("directory")
 		tag, _ := cmd.Flags().GetString("tag")
-		if err := grafana.PullDashboard(url, apiKey, directory, tag); err != nil {
+		folderName, _ := cmd.Flags().GetString("folderName")
+
+		if folderName != "" {
+			folderId, err = grafana.FindFolderId(url, apiKey, folderName)
+			if err != nil {
+				log.Fatalln(err)
+			}
+		} else {
+			folderId, _ = cmd.Flags().GetInt("folderId")
+		}
+
+		if err := grafana.PullDashboard(url, apiKey, directory, tag, folderId); err != nil {
 			log.Fatalln("Pull dashboards command failed", err)
 		}
 	},
@@ -187,7 +202,7 @@ func init() {
 	pushDashboardsCmd.PersistentFlags().IntP("folderId", "f", 0, "Directory Id to which push dashboards")
 	pushDashboardsCmd.PersistentFlags().StringP("folderName", "n", "", "Directory name to which push dashboards")
 
-	pullDashboardsCmd.PersistentFlags().IntP("folderId", "f", 0, "Directory Id from which pull dashboards")
+	pullDashboardsCmd.PersistentFlags().IntP("folderId", "f", -1, "Directory Id from which pull dashboards")
 	pullDashboardsCmd.PersistentFlags().StringP("folderName", "n", "", "Directory name from which pull dashboards")
 
 	if err := viper.BindPFlag("apikey", rootCmd.PersistentFlags().Lookup("apikey")); err != nil {
