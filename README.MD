@@ -8,21 +8,14 @@ Keep your grafana dashboards in sync.
   - [Table of Contents](#table-of-contents)
   - [Installing](#installing)
   - [Getting Started](#getting-started)
-    - [Pull](#pull)
-      - [Save all dashboards to directory](#save-all-dashboards-to-directory)
-      - [Save all dashboards from specific folder to local directory using folder name](#save-all-dashboards-from-specific-folder-to-local-directory-using-folder-name)
-      - [Save all dashboards from specific folder to local directory using folder id](#save-all-dashboards-from-specific-folder-to-local-directory-using-folder-id)
-      - [Save dashboards with specific tags to directory](#save-dashboards-with-specific-tags-to-directory)
-      - [Save folders configuration to directory](#save-folders-configuration-to-directory)
-      - [Save notifications configuration to directory](#save-notifications-configuration-to-directory)
-      - [Save datasources configuration to directory](#save-datasources-configuration-to-directory)
-    - [Push](#push)
-      - [Push dashboards to grafana](#push-dashboards-to-grafana)
-      - [Push dashboards to grafana in custom folder by folder name](#push-dashboards-to-grafana-in-custom-folder-by-folder-name)
-      - [Push folders to grafana in custom folder by folder id](#push-folders-to-grafana-in-custom-folder-by-folder-id)
-      - [Push folders to grafana](#push-folders-to-grafana)
-      - [Push notifications to grafana](#push-notifications-to-grafana)
-      - [Push datasources to grafana](#push-datasources-to-grafana)
+    - [Pull dashboards](#pull-dashboards)
+    - [Pull folder](#pull-folder)
+    - [Pull notifications](#pull-notifications)
+    - [Pull datasources](#pull-datasources)
+    - [Push dashboards](#push-dashboards)
+    - [Push folders](#push-folders)
+    - [Push notifications](#push-notifications)
+    - [Push datasources](#push-datasources)
   - [Global parameters](#global-parameters)
   - [Contributing](#contributing)
   - [License](#license)
@@ -33,111 +26,70 @@ Download the latest binary from [releases](https://github.com/mpostument/grafana
 
 ## Getting Started
 
-### Pull
+### Pull dashboards
 
-#### Save all dashboards to directory
+```shell
+# Save all dashboards to directory
+grafana-sync pull-dashboards --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="dashboards" --url http://127.0.0.1:3000
 
-`grafana-sync pull-dashboards --directory="dashboards"`  
-Example:
- `grafana-sync pull-dashboards --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="dashboards" --url http://127.0.0.1:3000`
+# Save all dashboards from specific folder to local directory using folder name
+grafana-sync pull-dashboards --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="dashboards" --url http://127.0.0.1:3000 --folderName="TestFolder"
 
-#### Save all dashboards from specific folder to local directory using folder name
+# Save all dashboards from specific folder to local directory using folder id
+grafana-sync pull-dashboards --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="dashboards" --url http://127.0.0.1:3000 --folderId=1
 
-Specify folder name in pull command
-`grafana-sync pull-dashboards --folderName=<FolderId> --directory="dashboards"`  
-Example:
- `grafana-sync pull-dashboards --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="folders" --url http://127.0.0.1:3000 --folderName="TestFolder"`
-
-#### Save all dashboards from specific folder to local directory using folder id
-
-Find grafana folder Id by opening /api/folders in browser.  
-Example:
-`http://127.0.0.1:3000/api/folders`
-
-Find required folderId in output
-
-```json
-[{"id":1,"uid":"RcuWg5UMz","title":"TestFolder"}]
+# Save dashboards with specific tags to directory
+grafana-sync pull-dashboards --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="dashboards" --url http://127.0.0.1:3000 --tag=export
 ```
 
-Specify folder id in pull command
-`grafana-sync pull-dashboards --folderId=<FolderId>`  
-Example:
- `grafana-sync pull-folders --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="folders" --url http://127.0.0.1:3000 --folderId=1`
+### Pull folder
 
-#### Save dashboards with specific tags to directory
-
-`grafana-sync pull-dashboards --tag=export`  
-Example:
- `grafana-sync pull-dashboards --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="dashboards" --url http://127.0.0.1:3000 --tag=export`  
-
-#### Save folders configuration to directory
-
-`grafana-sync pull-folders`  
-Example:
- `grafana-sync pull-folders --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="folders" --url http://127.0.0.1:3000`  
-
-#### Save notifications configuration to directory
-
-`grafana-sync pull-notifications`  
-Example:
- `grafana-sync pull-notifications --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="notifications" --url http://127.0.0.1:3000`  
-
-#### Save datasources configuration to directory
-
-`grafana-sync pull-datasources`  
-Example:
- `grafana-sync pull-datasources --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="datasources" --url http://127.0.0.1:3000`  
-
-### Push
-
-#### Push dashboards to grafana
-
-`grafana-sync push-dashboards`  
-Example:
- `grafana-sync push-dashboards --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="dashboards" --url http://127.0.0.1:3000`
-
-#### Push dashboards to grafana in custom folder by folder name
-
-Specify folder name in push command
-`grafana-sync push-dashboards --folderName=<FolderId>`  
-Example:
- `grafana-sync push-dashboards --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="folders" --url http://127.0.0.1:3000 --folderName="TestFolder"`
-
-#### Push folders to grafana in custom folder by folder id
-
-Find grafana folder Id by opening /api/folders in browser.  
-Example:
-`http://127.0.0.1:3000/api/folders`
-
-Find required folderId in output
-
-```json
-[{"id":1,"uid":"RcuWg5UMz","title":"TestFolder"}]
+```shell
+grafana-sync pull-folders --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="folders" --url http://127.0.0.1:3000 --folderId=1
 ```
 
-Specify folder id in push command
-`grafana-sync push-dashboards --folderId=<FolderId>`  
-Example:
- `grafana-sync push-folders --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="folders" --url http://127.0.0.1:3000 --folderId=1`
+### Pull notifications
 
-#### Push folders to grafana
+```shell
+grafana-sync pull-notifications --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="notifications" --url http://127.0.0.1:3000
+```
 
-`grafana-sync push-folders`  
-Example:
- `grafana-sync push-folders --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="folders" --url http://127.0.0.1:3000`
+### Pull datasources
 
-#### Push notifications to grafana
+```shell
+grafana-sync pull-datasources --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="datasources" --url http://127.0.0.1:3000
+```
 
-`grafana-sync push-notifications`  
-Example:
- `grafana-sync push-notifications --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="notifications" --url http://127.0.0.1:3000`
+### Push dashboards
 
-#### Push datasources to grafana
+```shell
+# Push all dashboards to general directory
+grafana-sync push-dashboards --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="dashboards" --url http://127.0.0.1:3000
 
-`grafana-sync push-datasources`  
-Example:
- `grafana-sync push-datasources --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="datasources" --url http://127.0.0.1:3000`
+# Push dashboards to grafana in custom folder by folder name
+grafana-sync push-dashboards --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="dashboards" --url http://127.0.0.1:3000 --folderName="TestFolder"
+
+# Push folders to grafana in custom folder by folder id
+grafana-sync push-folders --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="dashboards" --url http://127.0.0.1:3000 --folderId=1
+```
+
+### Push folders
+
+```shell
+grafana-sync push-folders --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="folders" --url http://127.0.0.1:3000
+```
+
+### Push notifications
+
+```shell
+grafana-sync push-notifications --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="notifications" --url http://127.0.0.1:3000
+```
+
+### Push datasources
+
+```shell
+grafana-sync push-datasources --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="datasources" --url http://127.0.0.1:3000
+```
 
 ## Global parameters
 
