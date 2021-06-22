@@ -33,7 +33,7 @@ var rootCmd = &cobra.Command{
 	Use:     "grafana-sync",
 	Short:   "Root command for grafana interaction",
 	Long:    `Root command for grafana interaction.`,
-	Version: "1.4.0",
+	Version: "1.4.1",
 }
 
 var pullDashboardsCmd = &cobra.Command{
