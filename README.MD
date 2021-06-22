@@ -45,7 +45,7 @@ grafana-sync pull-dashboards --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4M
 ### Pull folder
 
 ```shell
-grafana-sync pull-folders --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="folders" --url http://127.0.0.1:3000 --folderId=1
+grafana-sync pull-folders --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4MFgyYU44a1UiLCJuIjoiY29icmEiLCJpZCI6MX0=" --directory="folders" --url http://127.0.0.1:3000
 ```
 
 ### Pull notifications
