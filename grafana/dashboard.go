@@ -22,7 +22,11 @@ func PullDashboard(grafanaURL string, apiKey string, directory string, tag strin
 
 	ctx := context.Background()
 
-	c := sdk.NewClient(grafanaURL, apiKey, sdk.DefaultHTTPClient)
+	c, err := sdk.NewClient(grafanaURL, apiKey, sdk.DefaultHTTPClient)
+
+	if err != nil {
+		return err
+	}
 
 	searchParams := []sdk.SearchParam{sdk.SearchType(sdk.SearchTypeDashboard)}
 	if folderID != -1 {
@@ -62,7 +66,11 @@ func PushDashboard(grafanaURL string, apiKey string, directory string, folderId 
 	)
 
 	ctx := context.Background()
-	c := sdk.NewClient(grafanaURL, apiKey, sdk.DefaultHTTPClient)
+	c, err := sdk.NewClient(grafanaURL, apiKey, sdk.DefaultHTTPClient)
+	if err != nil {
+		return err
+	}
+
 	if filesInDir, err = ioutil.ReadDir(directory); err != nil {
 		return err
 	}

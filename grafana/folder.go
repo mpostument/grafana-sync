@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
 	"strings"
 
@@ -19,7 +20,10 @@ func PullFolders(grafanaURL string, apiKey string, directory string) error {
 	)
 	ctx := context.Background()
 
-	c := sdk.NewClient(grafanaURL, apiKey, sdk.DefaultHTTPClient)
+	c, err := sdk.NewClient(grafanaURL, apiKey, sdk.DefaultHTTPClient)
+	if err != nil {
+		return err
+	}
 
 	if folders, err = c.GetAllFolders(ctx); err != nil {
 		return err
@@ -45,7 +49,10 @@ func PushFolder(grafanaURL string, apiKey string, directory string) error {
 	)
 
 	ctx := context.Background()
-	c := sdk.NewClient(grafanaURL, apiKey, sdk.DefaultHTTPClient)
+	c, err := sdk.NewClient(grafanaURL, apiKey, http.DefaultClient)
+	if err != nil {
+		return err
+	}
 	if filesInDir, err = ioutil.ReadDir(directory); err != nil {
 		return err
 	}
@@ -71,7 +78,10 @@ func PushFolder(grafanaURL string, apiKey string, directory string) error {
 
 func FindFolderId(grafanaURL string, apiKey string, folderName string) (int, error) {
 	ctx := context.Background()
-	c := sdk.NewClient(grafanaURL, apiKey, sdk.DefaultHTTPClient)
+	c, err := sdk.NewClient(grafanaURL, apiKey, sdk.DefaultHTTPClient)
+	if err != nil {
+		return 0, err
+	}
 
 	allFolders, err := c.GetAllFolders(ctx)
 

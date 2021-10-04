@@ -19,7 +19,10 @@ func PullDatasources(grafanaURL string, apiKey string, directory string) error {
 	)
 	ctx := context.Background()
 
-	c := sdk.NewClient(grafanaURL, apiKey, sdk.DefaultHTTPClient)
+	c, err := sdk.NewClient(grafanaURL, apiKey, sdk.DefaultHTTPClient)
+	if err != nil {
+		return err
+	}
 
 	if datasources, err = c.GetAllDatasources(ctx); err != nil {
 		return err
@@ -45,7 +48,11 @@ func PushDatasources(grafanaURL string, apiKey string, directory string) error {
 	)
 
 	ctx := context.Background()
-	c := sdk.NewClient(grafanaURL, apiKey, sdk.DefaultHTTPClient)
+	c, err := sdk.NewClient(grafanaURL, apiKey, sdk.DefaultHTTPClient)
+	if err != nil {
+		return err
+	}
+
 	if filesInDir, err = ioutil.ReadDir(directory); err != nil {
 		return err
 	}
