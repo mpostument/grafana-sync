@@ -40,8 +40,8 @@ var pullDashboardsCmd = &cobra.Command{
 	Use:   "pull-dashboards",
 	Short: "Pull grafana dashboards in to the directory",
 	Long: `Save to the directory grafana dashboards.
-Directory name specified by flag --directory. If flag --tags is used,
-additional directory will be created with tag name creating structure like directory/tag`,
+Directory name specified by flag --directory. If flag --tag is used,
+only dashboards with given tag are pulled`,
 	Run: func(cmd *cobra.Command, args []string) {
 		var (
 			folderId int
@@ -201,9 +201,9 @@ func init() {
 	pullDataSourcesCmd.PersistentFlags().StringP("tag", "t", "", "Dashboard tag to read")
 	pushDashboardsCmd.PersistentFlags().IntP("folderId", "f", 0, "Directory Id to which push dashboards")
 	pushDashboardsCmd.PersistentFlags().StringP("folderName", "n", "", "Directory name to which push dashboards")
-
 	pullDashboardsCmd.PersistentFlags().IntP("folderId", "f", -1, "Directory Id from which pull dashboards")
 	pullDashboardsCmd.PersistentFlags().StringP("folderName", "n", "", "Directory name from which pull dashboards")
+	pullDashboardsCmd.PersistentFlags().StringP("tag", "t", "", "Dashboard tag to p")
 
 	if err := viper.BindPFlag("apikey", rootCmd.PersistentFlags().Lookup("apikey")); err != nil {
 		log.Println(err)
