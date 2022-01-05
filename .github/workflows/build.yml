@@ -14,9 +14,9 @@ jobs:
     steps:
 
     - name: Setup Go environment
-      uses: actions/setup-go@v2.1.4
+      uses: actions/setup-go@v2.1.5
       with:
-        go-version: 1.16.4
+        go-version: 1.17.5
 
     - name: Check out code into the Go module directory
       uses: actions/checkout@v2.4.0
