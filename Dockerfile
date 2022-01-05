@@ -1,14 +1,19 @@
-FROM alpine
+# Build App
+FROM golang:1.17.5-alpine AS builder
 
-RUN apk update \
-  && apk add ca-certificates \
-  && update-ca-certificates
+RUN apk --no-cache add gcc musl-dev
 
-RUN apk --no-cache add openssl wget 
+WORKDIR ${GOPATH}/src/github.com/mpostument/grafana-sync
+COPY . ${GOPATH}/src/github.com/mpostument/grafana-sync
 
-RUN wget https://github.com/mpostument/grafana-sync/releases/download/1.4.3/grafana-sync_1.4.3_Linux_x86_64.tar.gz \
-  && tar -xvzf grafana-sync_1.4.3_Linux_x86_64.tar.gz \
-  && rm grafana-sync_1.4.3_Linux_x86_64.tar.gz \
-  && chmod +x ./grafana-sync
+RUN go build -o /go/bin/grafana-sync .
 
-ENTRYPOINT ["./grafana-sync"]
+
+# Create small image with binary
+FROM alpine:3.15
+
+RUN apk --no-cache add ca-certificates
+
+COPY --from=builder /go/bin/grafana-sync /usr/bin/grafana-sync
+
+ENTRYPOINT ["/usr/bin/grafana-sync"]
