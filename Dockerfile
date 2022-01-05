@@ -1,8 +1,6 @@
 # Build App
 FROM golang:1.17.5-alpine AS builder
 
-RUN apk --no-cache add gcc musl-dev
-
 WORKDIR ${GOPATH}/src/github.com/mpostument/grafana-sync
 COPY . ${GOPATH}/src/github.com/mpostument/grafana-sync
 
