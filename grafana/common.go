@@ -7,6 +7,8 @@ import (
 	"path/filepath"
 )
 
+var ExecutionErrorHappened = false
+
 func writeToFile(directory string, content []byte, name string, tag string) error {
 	var (
 		err           error

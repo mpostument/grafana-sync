@@ -59,15 +59,18 @@ func PushNotification(grafanaURL string, apiKey string, directory string) error 
 		if strings.HasSuffix(file.Name(), ".json") {
 			if rawFolder, err = ioutil.ReadFile(fmt.Sprintf("%s/%s", directory, file.Name())); err != nil {
 				log.Println(err)
+				ExecutionErrorHappened = true
 				continue
 			}
 			var notification sdk.AlertNotification
 			if err = json.Unmarshal(rawFolder, &notification); err != nil {
 				log.Println(err)
+				ExecutionErrorHappened = true
 				continue
 			}
 			if _, err := c.CreateAlertNotification(ctx, notification); err != nil {
 				log.Printf("error on importing notification %s", notification.Name)
+				ExecutionErrorHappened = true
 				continue
 			}
 		}

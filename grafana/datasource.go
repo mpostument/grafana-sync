@@ -65,10 +65,12 @@ func PushDatasources(grafanaURL string, apiKey string, directory string) error {
 			var datasource sdk.Datasource
 			if err = json.Unmarshal(rawFolder, &datasource); err != nil {
 				log.Println(err)
+				ExecutionErrorHappened = true
 				continue
 			}
 			if _, err := c.CreateDatasource(ctx, datasource); err != nil {
 				log.Printf("error on importing folder %s", datasource.Name)
+				ExecutionErrorHappened = true
 				continue
 			}
 		}
