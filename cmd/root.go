@@ -33,7 +33,7 @@ var rootCmd = &cobra.Command{
 	Use:     "grafana-sync",
 	Short:   "Root command for grafana interaction",
 	Long:    `Root command for grafana interaction.`,
-	Version: "1.4.1",
+	Version: "1.4.5",
 }
 
 var pullDashboardsCmd = &cobra.Command{
@@ -65,6 +65,9 @@ only dashboards with given tag are pulled`,
 		if err := grafana.PullDashboard(url, apiKey, directory, tag, folderId); err != nil {
 			log.Fatalln("Pull dashboards command failed", err)
 		}
+		if grafana.ExecutionErrorHappened {
+			os.Exit(1)
+		}
 	},
 }
 
@@ -94,6 +97,9 @@ var pushDashboardsCmd = &cobra.Command{
 		if err := grafana.PushDashboard(url, apiKey, directory, folderId); err != nil {
 			log.Fatalln("Push dashboards command failed", err)
 		}
+		if grafana.ExecutionErrorHappened {
+			os.Exit(1)
+		}
 	},
 }
 
@@ -109,6 +115,9 @@ Directory name specified by flag --directory.`,
 		if err := grafana.PullFolders(url, apiKey, directory); err != nil {
 			log.Fatalln("Pull folders command failed", err)
 		}
+		if grafana.ExecutionErrorHappened {
+			os.Exit(1)
+		}
 	},
 }
 
@@ -122,6 +131,9 @@ var pushFoldersCmd = &cobra.Command{
 		directory, _ := cmd.Flags().GetString("directory")
 		if err := grafana.PushFolder(url, apiKey, directory); err != nil {
 			log.Fatalln("Push folders command failed", err)
+		}
+		if grafana.ExecutionErrorHappened {
+			os.Exit(1)
 		}
 	},
 }
@@ -138,6 +150,9 @@ Directory name specified by flag --directory.`,
 		if err := grafana.PullNotifications(url, apiKey, directory); err != nil {
 			log.Fatalln("Pull notifications command failed", err)
 		}
+		if grafana.ExecutionErrorHappened {
+			os.Exit(1)
+		}
 	},
 }
 
@@ -151,6 +166,9 @@ var pushNotificationsCmd = &cobra.Command{
 		directory, _ := cmd.Flags().GetString("directory")
 		if err := grafana.PushNotification(url, apiKey, directory); err != nil {
 			log.Fatalln("Push notifications command failed", err)
+		}
+		if grafana.ExecutionErrorHappened {
+			os.Exit(1)
 		}
 	},
 }
@@ -167,6 +185,9 @@ Directory name specified by flag --directory.`,
 		if err := grafana.PullDatasources(url, apiKey, directory); err != nil {
 			log.Fatalln("Pull datasources command failed", err)
 		}
+		if grafana.ExecutionErrorHappened {
+			os.Exit(1)
+		}
 	},
 }
 
@@ -180,6 +201,9 @@ var pushDataSourcesCmd = &cobra.Command{
 		directory, _ := cmd.Flags().GetString("directory")
 		if err := grafana.PushDatasources(url, apiKey, directory); err != nil {
 			log.Fatalln("Push datasources command failed", err)
+		}
+		if grafana.ExecutionErrorHappened {
+			os.Exit(1)
 		}
 	},
 }

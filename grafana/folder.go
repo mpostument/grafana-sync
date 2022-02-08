@@ -60,15 +60,18 @@ func PushFolder(grafanaURL string, apiKey string, directory string) error {
 		if strings.HasSuffix(file.Name(), ".json") {
 			if rawFolder, err = ioutil.ReadFile(fmt.Sprintf("%s/%s", directory, file.Name())); err != nil {
 				log.Println(err)
+				ExecutionErrorHappened = true
 				continue
 			}
 			var folder sdk.Folder
 			if err = json.Unmarshal(rawFolder, &folder); err != nil {
 				log.Println(err)
+				ExecutionErrorHappened = true
 				continue
 			}
 			if _, err := c.CreateFolder(ctx, folder); err != nil {
 				log.Printf("error on importing folder %s", folder.Title)
+				ExecutionErrorHappened = true
 				continue
 			}
 		}

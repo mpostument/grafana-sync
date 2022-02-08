@@ -21,7 +21,6 @@ func PullDashboard(grafanaURL string, apiKey string, directory string, tag strin
 	)
 
 	ctx := context.Background()
-
 	c, err := sdk.NewClient(grafanaURL, apiKey, sdk.DefaultHTTPClient)
 
 	if err != nil {
@@ -44,6 +43,7 @@ func PullDashboard(grafanaURL string, apiKey string, directory string, tag strin
 	for _, link := range boardLinks {
 		if rawBoard, meta, err = c.GetDashboardByUID(ctx, link.UID); err != nil {
 			log.Printf("%s for %s\n", err, link.URI)
+			ExecutionErrorHappened = true
 			continue
 		}
 		rawBoard.ID = 0
@@ -78,11 +78,13 @@ func PushDashboard(grafanaURL string, apiKey string, directory string, folderId 
 		if strings.HasSuffix(file.Name(), ".json") {
 			if rawBoard, err = ioutil.ReadFile(fmt.Sprintf("%s/%s", directory, file.Name())); err != nil {
 				log.Println(err)
+				ExecutionErrorHappened = true
 				continue
 			}
 			var board sdk.Board
 			if err = json.Unmarshal(rawBoard, &board); err != nil {
 				log.Println(err)
+				ExecutionErrorHappened = true
 				continue
 			}
 			params := sdk.SetDashboardParams{
@@ -91,6 +93,7 @@ func PushDashboard(grafanaURL string, apiKey string, directory string, folderId 
 			}
 			if _, err := c.SetDashboard(ctx, board, params); err != nil {
 				log.Printf("error on importing dashboard %s", board.Title)
+				ExecutionErrorHappened = true
 				continue
 			}
 		}
