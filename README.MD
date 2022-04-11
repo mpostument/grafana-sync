@@ -23,6 +23,7 @@ Keep your grafana dashboards in sync.
 ## Installing
 
 Download the latest binary from [releases](https://github.com/mpostument/grafana-sync/releases)
+Or use docker image from [github registry](https://github.com/mpostument/grafana-sync/pkgs/container/grafana-sync)
 
 ## Getting Started
 
