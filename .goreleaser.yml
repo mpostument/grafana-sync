@@ -26,7 +26,7 @@ archives:
       darwin: macOS
       linux: Linux
     files:
-      - README.md
+      - README.MD
       - LICENSE
 checksum:
   name_template: "checksums.txt"
