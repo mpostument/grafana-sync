@@ -6,5 +6,5 @@ require (
 	github.com/grafana-tools/sdk v0.0.0-20220611090550-5c2631ac7ee4
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/spf13/cobra v1.5.0
-	github.com/spf13/viper v1.13.0
+	github.com/spf13/viper v1.14.0
 )
