@@ -5,7 +5,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+	http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,7 +33,7 @@ var rootCmd = &cobra.Command{
 	Use:     "grafana-sync",
 	Short:   "Root command for grafana interaction",
 	Long:    `Root command for grafana interaction.`,
-	Version: "1.4.6",
+	Version: "1.5.0",
 }
 
 var pullDashboardsCmd = &cobra.Command{
