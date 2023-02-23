@@ -47,7 +47,7 @@ func PullDashboard(grafanaURL string, apiKey string, directory string, tag strin
 			continue
 		}
 		rawBoard.ID = 0
-		b, err := json.Marshal(rawBoard)
+		b, err := json.MarshalIndent(rawBoard, "", "  ")
 		if err != nil {
 			return err
 		}
