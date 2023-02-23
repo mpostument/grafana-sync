@@ -1,7 +1,6 @@
 package grafana
 
 import (
-	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -27,7 +26,7 @@ func writeToFile(directory string, content []byte, name string, tag string) erro
 			return err
 		}
 	}
-	fileName = fmt.Sprintf("%s/%s.json", path, name)
+	fileName = filepath.Join(path, name+".json")
 	dashboardFile, err = os.Create(fileName)
 	if err != nil {
 		return err

@@ -3,12 +3,11 @@ package grafana
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
-	"strings"
+	"path/filepath"
 
 	"github.com/grafana-tools/sdk"
 )
@@ -57,8 +56,8 @@ func PushFolder(grafanaURL string, apiKey string, directory string) error {
 		return err
 	}
 	for _, file := range filesInDir {
-		if strings.HasSuffix(file.Name(), ".json") {
-			if rawFolder, err = ioutil.ReadFile(fmt.Sprintf("%s/%s", directory, file.Name())); err != nil {
+		if filepath.Ext(file.Name()) == ".json" {
+			if rawFolder, err = ioutil.ReadFile(filepath.Join(directory, file.Name())); err != nil {
 				log.Println(err)
 				ExecutionErrorHappened = true
 				continue
