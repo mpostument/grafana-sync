@@ -28,7 +28,7 @@ func PullNotifications(grafanaURL string, apiKey string, directory string) error
 	}
 
 	for _, notification := range notifications {
-		b, err := json.Marshal(notification)
+		b, err := json.MarshalIndent(notification, "", "  ")
 		if err != nil {
 			return err
 		}

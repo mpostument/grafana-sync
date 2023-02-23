@@ -28,7 +28,7 @@ func PullDatasources(grafanaURL string, apiKey string, directory string) error {
 	}
 
 	for _, datasource := range datasources {
-		b, err := json.Marshal(datasource)
+		b, err := json.MarshalIndent(datasource, "", "  ")
 		if err != nil {
 			return err
 		}

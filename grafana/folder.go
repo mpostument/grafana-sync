@@ -29,7 +29,7 @@ func PullFolders(grafanaURL string, apiKey string, directory string) error {
 	}
 
 	for _, folder := range folders {
-		b, err := json.Marshal(folder)
+		b, err := json.MarshalIndent(folder, "", "  ")
 		if err != nil {
 			return err
 		}
