@@ -18,7 +18,7 @@ func PullNotifications(grafanaURL string, apiKey string, directory string) error
 	)
 	ctx := context.Background()
 
-	c, err := sdk.NewClient(grafanaURL, apiKey, sdk.DefaultHTTPClient)
+	c, err := sdk.NewClient(grafanaURL, apiKey, httpClient)
 	if err != nil {
 		return err
 	}
@@ -47,7 +47,7 @@ func PushNotification(grafanaURL string, apiKey string, directory string) error 
 	)
 
 	ctx := context.Background()
-	c, err := sdk.NewClient(grafanaURL, apiKey, sdk.DefaultHTTPClient)
+	c, err := sdk.NewClient(grafanaURL, apiKey, httpClient)
 	if err != nil {
 		return err
 	}

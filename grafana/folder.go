@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"log"
-	"net/http"
 	"os"
 	"path/filepath"
 
@@ -19,7 +18,7 @@ func PullFolders(grafanaURL string, apiKey string, directory string) error {
 	)
 	ctx := context.Background()
 
-	c, err := sdk.NewClient(grafanaURL, apiKey, sdk.DefaultHTTPClient)
+	c, err := sdk.NewClient(grafanaURL, apiKey, httpClient)
 	if err != nil {
 		return err
 	}
@@ -48,7 +47,7 @@ func PushFolder(grafanaURL string, apiKey string, directory string) error {
 	)
 
 	ctx := context.Background()
-	c, err := sdk.NewClient(grafanaURL, apiKey, http.DefaultClient)
+	c, err := sdk.NewClient(grafanaURL, apiKey, httpClient)
 	if err != nil {
 		return err
 	}
@@ -80,7 +79,7 @@ func PushFolder(grafanaURL string, apiKey string, directory string) error {
 
 func FindFolderId(grafanaURL string, apiKey string, folderName string) (int, error) {
 	ctx := context.Background()
-	c, err := sdk.NewClient(grafanaURL, apiKey, sdk.DefaultHTTPClient)
+	c, err := sdk.NewClient(grafanaURL, apiKey, httpClient)
 	if err != nil {
 		return 0, err
 	}
