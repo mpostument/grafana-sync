@@ -20,14 +20,16 @@ import (
 	"log"
 	"os"
 
-	"github.com/mpostument/grafana-sync/grafana"
 	"github.com/spf13/cobra"
+
+	"github.com/mpostument/grafana-sync/grafana"
 
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/viper"
 )
 
 var cfgFile string
+var customHeaders map[string]string
 
 var rootCmd = &cobra.Command{
 	Use:     "grafana-sync",
@@ -222,6 +224,7 @@ func init() {
 	rootCmd.PersistentFlags().StringP("url", "u", "http://localhost:3000", "Grafana Url with port")
 	rootCmd.PersistentFlags().StringP("directory", "d", ".", "Directory where to save dashboards")
 	rootCmd.PersistentFlags().StringP("apikey", "a", "", "Grafana api key")
+	rootCmd.PersistentFlags().StringToStringVar(&customHeaders, "customHeaders", map[string]string{}, "Key-value pairs of custom http headers (key1=value1,key2=value2)")
 	pullDataSourcesCmd.PersistentFlags().StringP("tag", "t", "", "Dashboard tag to read")
 	pushDashboardsCmd.PersistentFlags().IntP("folderId", "f", 0, "Directory Id to which push dashboards")
 	pushDashboardsCmd.PersistentFlags().StringP("folderName", "n", "", "Directory name to which push dashboards")
@@ -230,6 +233,10 @@ func init() {
 	pullDashboardsCmd.PersistentFlags().StringP("tag", "t", "", "Dashboard tag to p")
 
 	if err := viper.BindPFlag("apikey", rootCmd.PersistentFlags().Lookup("apikey")); err != nil {
+		log.Println(err)
+	}
+
+	if err := viper.BindPFlag("customHeaders", rootCmd.PersistentFlags().Lookup("customHeaders")); err != nil {
 		log.Println(err)
 	}
 
@@ -267,4 +274,6 @@ func initConfig() {
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Println("Using config file:", viper.ConfigFileUsed())
 	}
+
+	grafana.InitHttpClient(viper.GetStringMapString("customHeaders"))
 }

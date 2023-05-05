@@ -20,7 +20,7 @@ func PullDashboard(grafanaURL string, apiKey string, directory string, tag strin
 	)
 
 	ctx := context.Background()
-	c, err := sdk.NewClient(grafanaURL, apiKey, sdk.DefaultHTTPClient)
+	c, err := sdk.NewClient(grafanaURL, apiKey, httpClient)
 
 	if err != nil {
 		return err
@@ -65,7 +65,7 @@ func PushDashboard(grafanaURL string, apiKey string, directory string, folderId 
 	)
 
 	ctx := context.Background()
-	c, err := sdk.NewClient(grafanaURL, apiKey, sdk.DefaultHTTPClient)
+	c, err := sdk.NewClient(grafanaURL, apiKey, httpClient)
 	if err != nil {
 		return err
 	}
