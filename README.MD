@@ -99,6 +99,7 @@ grafana-sync push-datasources --apikey="eyJrIjoiOWJYTktGNFlCbFVMOG1LY3d6ekN4Mmw4
 `apikey` - Grafana api key, need to be editor or admin. Default `""`.  
 Api key can be stored in `$HOME/.grafana-sync.yaml` as `apikey: <ApiKey>`  
 `url` - Grafana Url with port. Default `http://localhost:3000`  
+`customHeaders` - Key-value pairs of custom http headers (header1=value1,header2=value2)  
 
 ## Contributing
 
